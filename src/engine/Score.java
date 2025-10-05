@@ -12,7 +12,34 @@ public class Score implements Comparable<Score> {
 	private String name;
 	/** Score points. */
 	private int score;
+	private String grade;
+    private long time;
 
+    private static final long S_RANK_TIME = 60000;
+    private static final long A_RANK_TIME = 120000;
+    private static final long B_RANK_TIME = 180000;
+
+    public Score(final String name, final long time) {
+        this.name = name;
+        this.time = time;
+        setScoreAndGrade();
+    }
+
+    private void setScoreAndGrade() {
+        if (this.time <= S_RANK_TIME) {
+            this.grade = "S";
+            this.score = 10000;
+        } else if (this.time <= A_RANK_TIME) {
+            this.grade = "A";
+            this.score = 7500;
+        } else if (this.time <= B_RANK_TIME) {
+            this.grade = "B";
+            this.score = 5000;
+        } else {
+            this.grade = "C";
+            this.score = 2500;
+        }
+    }
 	/**
 	 * Constructor.
 	 * 
@@ -44,6 +71,18 @@ public class Score implements Comparable<Score> {
 		return this.score;
 	}
 
+	public final String getGrade() {
+        return this.grade;
+    }
+
+    public final long getTime() {
+        return this.time;
+    }
+
+    @Override
+    public final int compareTo(final Score other) {
+        return Integer.compare(other.getScore(), this.score);
+    }
 	/**
 	 * Orders the scores descending by score.
 	 * 
